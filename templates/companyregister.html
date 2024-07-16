@@ -17,7 +17,7 @@
 
         <nav class="navbar navbar-expand-lg bg-body-tertiary d-flex">
           <div class="container-fluid">
-            <a class="navbar-brand" href="{{url_for('index')}}" style="float: left; color: rgb(0, 0, 0); font-size: 48px; font-family: Inter; font-weight: 900; word-wrap: break-word">CollabSync</a>
+            <a class="navbar-brand" href="{{url_for('index')}}" style="float: left; color: rgb(0, 0, 0); font-size: 48px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 900; word-wrap: break-word">CollabSync</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -39,7 +39,19 @@
           </div>
         </nav>
 
-        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            <div class="alert alert-danger" role="alert" style="left:-15px ;top:870px ;font-size: 50px;">
+                {{message}}
+              </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
                 <div class="EntryFields" style="width: 1068px; height: 500px; left: 230px; top: 170px; position: absolute">
                   <form actions="" class="form" method="post">
                   <div class="CompanyName" style="width: 439px; height: 58px; left: 0px; top: 0px; position: absolute; text-align: center; color: white; font-size: 55px; font-family: Inter; font-weight: 400; word-wrap: break-word">Company Name</div>
@@ -82,7 +94,7 @@
                 <div class="ConnectAndCollaborate" style="left: 1450px; top: 350px; position: absolute"><span style="color: white; font-size: 96px; font-family: Inter; font-weight: 600; word-wrap: break-word">Connect and </div>
                     <div class="ConnectAndCollaborate" style="left: 1600px; top: 500px; position: absolute"><span style="color: white; font-size: 126px; font-family: Inter; font-weight: 600; word-wrap: break-word">Collaborate</div>
                 
-                <a class="icon-link icon-link-hover" href="/templates/index.html" style="width: 173px; height: 100px; left: 61px; top: 142px; position: absolute; text-align: center; color: rgb(255, 255, 255); font-size: 64px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                <a class="icon-link icon-link-hover" href="{{url_for('index')}}" style="width: 173px; height: 100px; left: 61px; top: 142px; position: absolute; text-align: center; color: rgb(255, 255, 255); font-size: 64px; font-family: Inter; font-weight: 400; word-wrap: break-word">
                   <img class="Options" style="width: 100%; height: 100%; position: relative" src="/static/BackButton.png" />
                   <svg class="bi" aria-hidden="true" width: 1263px; left: 316px; top: 557px; position: absolute><use xlink:href="#arrow-right"></use></svg>
               </div>

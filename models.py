@@ -11,7 +11,7 @@ class Influencer(db.Model):
     category=db.Column(db.String(32),unique=False,nullable=False)
     platform=db.Column(db.String(32),unique=False,nullable=False)
     followers=db.Column(db.String(32),unique=False,nullable=False)
-    earning=db.Column(db.String(32),unique=False,nullable=False)
+    earnings=db.Column(db.Integer,unique=False,nullable=True)
 
 class Company(db.Model):
     __tablename__='company'
@@ -20,7 +20,7 @@ class Company(db.Model):
     username=db.Column(db.String(32),unique=True,nullable=False)
     passhash=db.Column(db.String(100),unique=False,nullable=False)
     industry=db.Column(db.String(32),unique=False,nullable=False)
-    budget=db.Column(db.String(32),unique=False,nullable=False)
+    budget=db.Column(db.Integer,unique=False,nullable=False)
 
 class Admin(db.Model):
     __tablename__='admin'
