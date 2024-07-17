@@ -29,15 +29,20 @@ def login_post():
     if not user1 and not user2:
         flash('Username Does Not Exist')
         return redirect(url_for('login'))
-    if not check_password_hash(user1.passhash,password) and not check_password_hash(user2.passhash,password):
-        flash('Incorrect Password')
-        return redirect(url_for('login'))
     if user1:
-        session['user_id']=user1.id
-        return redirect(url_for('companyhome'))
-    elif user2:
-        session['user_id']=user2.id
-        return  redirect(url_for('influencerhome'))
+        if not check_password_hash(user1.passhash,password):
+            flash('Incorrect Password')
+            return redirect(url_for('login'))
+        else:
+            session['user_id']=user1.id
+            return redirect(url_for('companyhome'))
+    if user2:
+        if not check_password_hash(user2.passhash,password):
+            flash('Incorrect Password')
+            return redirect(url_for('login'))
+        else:
+            session['user_id']=user2.id
+            return redirect(url_for('influencerhome'))
 
 
 @app.route('/influencerregister')
@@ -56,8 +61,12 @@ def influencerregister_post():
     if not name or not username or not password or not followers or not category or not platform:
         flash('Please Fill Out All Fields') 
         return redirect(url_for('influencerregister'))
-    user=Influencer.query.filter_by(username=username).first()
-    if user:
+    if len(password)<7:
+        flash('Password should be atleast 7 characters long')
+        return redirect(url_for('influencerregister'))
+    user1=Influencer.query.filter_by(username=username).first()
+    user2=Company.query.filter_by(username=username).first()
+    if user1 or user2:
         flash("Username already exists")
         return redirect(url_for('influencerregister'))
     password_hash=generate_password_hash(password)
@@ -85,8 +94,10 @@ def companyregister_post():
         return redirect(url_for('companyregister'))
     if len(password)<7:
         flash('Password should be atleast 7 characters long')
-    user=Company.query.filter_by(username=username).first()
-    if user:
+        return redirect(url_for('companyregister'))
+    user1=Company.query.filter_by(username=username).first()
+    user2=Influencer.query.filter_by(username=username).first()
+    if user1 or user2:
         flash("Username already exists")
         return redirect(url_for('companyregister'))
     password_hash=generate_password_hash(password)
@@ -95,19 +106,148 @@ def companyregister_post():
     db.session.commit()
     return redirect(url_for('login'))
 
+
+#influencer
+
+
 @app.route('/influencerhome')
 def influencerhome():
     if 'user_id' in session:
-        return render_template('influencerhome')
+        return render_template('influencerhome.html')
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
     
+@app.route('/influencerprofile')
+def influencerprofile():
+    if 'user_id' in session:
+        user=Influencer.query.get(session['user_id'])
+        return render_template('influencerprofile.html',user=user)
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+@app.route('/influencerfind')
+def influencerfind():
+    if 'user_id' in session:
+        return render_template('influencerfind.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+@app.route('/influencercampaigns')
+def influencercampaigns():
+    if 'user_id' in session:
+        return render_template('influencercampaigns.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+@app.route('/influencerprofileedit')
+def influencerprofileedit():
+    if 'user_id' in session:
+        return render_template('influencerprofileedit.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+@app.route('/influencerprofileedit',methods=['POST'])
+def influencerprofileedit_post():
+    name=request.form.get('name')
+    oldpassword=request.form.get('oldpassword')
+    newpassword=request.form.get('newpassword')
+    followers=request.form.get('followers')
+    platform=request.form.get('platform')
+    
+    if not oldpassword:
+        flash('Please Enter Your Password to Make Changes')
+        return redirect(url_for('influencerprofileedit'))
+    user=Influencer.query.get(session['user_id'])
+    if not check_password_hash(user.passhash,oldpassword):
+        flash('Incorrect Password')
+        return redirect(url_for('influencerprofileedit'))
+    if newpassword:
+        newpasswordhash=generate_password_hash(newpassword)
+    if name:
+        user.name=name
+    if newpassword:
+        user.passhash=newpasswordhash
+    if followers:
+        user.followers=followers
+    if platform:
+        user.platform=platform
+    db.session.commit()
+    return redirect(url_for('influencerprofile'))
+    
+
+#company
+
+
 @app.route('/companyhome')
 def companyhome():
     if 'user_id' in session:
-        return render_template('companyhome')
+        return render_template('companyhome.html')
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
 
+@app.route('/companyprofile')
+def companyprofile():
+    if 'user_id' in session:
+        user=Company.query.get(session['user_id'])
+        return render_template('companyprofile.html',user=user)
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+@app.route('/companyfind')
+def companyfind():
+    if 'user_id' in session:
+        return render_template('companyfind.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+
+@app.route('/companycampaigns')
+def companycampaigns():
+    if 'user_id' in session:
+        return render_template('companycampaigns.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+@app.route('/companyprofileedit')
+def companyprofileedit():
+    if 'user_id' in session:
+        return render_template('companyprofileedit.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+
+@app.route('/companyprofileedit',methods=['POST'])
+def companyprofileedit_post():
+    companyname=request.form.get('companyname')
+    oldpassword=request.form.get('oldpassword')
+    newpassword=request.form.get('newpassword')
+    industry=request.form.get('industry')
+    budget=request.form.get('budget')
+    
+    if not oldpassword:
+        flash('Please Enter Your Password to Make Changes')
+        return redirect(url_for('companyprofileedit'))
+    user=Company.query.get(session['user_id'])
+    if not check_password_hash(user.passhash,oldpassword):
+        flash('Incorrect Password')
+        return redirect(url_for('companyprofileedit'))
+    if newpassword:
+        newpasswordhash=generate_password_hash(newpassword)
+    if companyname:
+        user.companyname=companyname
+    if newpassword:
+        user.passhash=newpasswordhash
+    if budget:
+        user.budget=budget
+    if industry:
+        user.industry=industry
+    db.session.commit()
+    return redirect(url_for('companyprofile'))
