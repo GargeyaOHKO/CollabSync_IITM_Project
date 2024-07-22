@@ -30,12 +30,13 @@ class Admin(db.Model):
 class Campaign(db.Model):
     __tablename__='campaign'
     id=db.Column(db.Integer,primary_key=True)
-    company_id=db.Column(db.Integer,db.ForeignKey('company.id'),nullable=False)
+    companyname=db.Column(db.String(32),unique=False,nullable=False)
     name=db.Column(db.String(32),unique=True,nullable=False)
     description=db.Column(db.String(100),unique=False,nullable=False)
     budget=db.Column(db.String(32),unique=False,nullable=False)
-    visibility=db.Column(db.String(32),unique=False,nullable=False)
-    goals=db.Column(db.String(100),unique=False,nullable=False)
+    visibility=db.Column(db.String(32),unique=False,nullable=True)
+
+    #company = db.relationship('Company', backref=db.backref('campaigns', lazy=True))
     
 class Ad(db.Model):
     __tablename__='ad'

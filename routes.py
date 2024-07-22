@@ -20,7 +20,6 @@ def login():
 def login_post():
     username=request.form.get('username')
     password=request.form.get('password')
-
     if not username or not password:
         flash("Please fill out all the fields")
         return redirect(url_for('login'))
@@ -43,7 +42,6 @@ def login_post():
         else:
             session['user_id']=user2.id
             return redirect(url_for('influencerhome'))
-
 
 @app.route('/influencerregister')
 def influencerregister():
@@ -74,7 +72,6 @@ def influencerregister_post():
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for('login'))
-
 
 
 @app.route('/companyregister')
@@ -211,7 +208,8 @@ def companyfind():
 @app.route('/companycampaigns')
 def companycampaigns():
     if 'user_id' in session:
-        return render_template('companycampaigns.html')
+        campaigns = Campaign.query.all()
+        return render_template('companycampaigns.html', campaigns=campaigns)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
@@ -251,3 +249,76 @@ def companyprofileedit_post():
         user.industry=industry
     db.session.commit()
     return redirect(url_for('companyprofile'))
+
+
+@app.route('/campaign/add')
+def add_campaign():
+    if 'user_id' in session:
+        return render_template('campaign/add.html')
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+
+@app.route('/campaign/add',methods=['POST'])
+def add_campaign_post():
+    name=request.form.get('name')
+    description=request.form.get('description')
+    budget=request.form.get('budget')
+    company = Company.query.get(session['user_id'])
+    companyname = company.companyname
+    if not name or not description or not budget:
+        flash("Please Fill Out All The Fields")
+        return redirect(url_for('add_campaign'))
+    campaign=Campaign(companyname=companyname,name=name,description=description,budget=budget,visibility=True)
+    db.session.add(campaign)
+    db.session.commit()
+    #flash('Campaign Added Successfully')
+    return redirect(url_for('companycampaigns'))
+    
+@app.route('/campaign/<int:id>/edit')
+def edit_campaign(id):
+    if 'user_id' in session:
+        campaign=Campaign.query.get(id)
+        if not campaign:
+            flash("Campaign Does Not Exist")
+            return redirect(url_for('companycampaigns'))
+        return render_template('campaign/edit.html',campaign=campaign)
+    else:
+        flash("Please Login To Continue")
+        return redirect(url_for('login'))
+
+@app.route('/campaign/<int:id>/edit',methods=['POST'])
+def edit_campaign_post(id):
+    campaign=Campaign.query.get(id)
+    if not campaign:
+        flash("Campaign Does Not Exist")
+        return redirect(url_for('companycampaigns'))
+    name=request.form.get('name')
+    description=request.form.get('description')
+    budget=request.form.get('budget')
+    campaign.name=name
+    campaign.description=description
+    campaign.budget=budget
+    db.session.commit()
+    #flash('Campaign Edited Successfully')
+    return redirect(url_for('companycampaigns'))    
+
+@app.route('/campaign/<int:id>/delete')
+def delete_campaign(id):
+    if 'user_id' in session:
+        campaign=Campaign.query.get(id)
+        return render_template('campaign/delete.html',campaign=campaign)
+    else:
+        flash("Please Login To Continue")
+        return redirect(url_for('login'))
+
+@app.route('/campaign/<int:id>/delete',methods=['POST'])
+def delete_campaign_post(id):
+    campaign=Campaign.query.get(id)
+    if not campaign:
+        flash("Campaign Does Not Exist")
+        return redirect(url_for('companycampaigns'))
+    db.session.delete(campaign)
+    db.session.commit()
+    #flash('Campaign Edited Successfully')
+    return redirect(url_for('companycampaigns'))

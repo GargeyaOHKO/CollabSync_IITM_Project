@@ -39,18 +39,7 @@
           </div>
         </nav>
 
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            <div class="alert alert-danger" role="alert" style="left:-15px ;top:870px ;font-size: 50px;">
-                {{message}}
-              </div>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        {% endwith %}
+        {% include 'messages.html' with context%}
 
                 <div class="EntryFields" style="width: 1068px; height: 500px; left: 230px; top: 330px; position: absolute">
                   <form actions="" class="form" method="post">
@@ -63,27 +52,27 @@
                                     
                   <div class="form-floating mb-3" style="width: 617px; height: 71px; left: 451px; top: 0px; position: absolute; border-radius: 34px; ">
                     <input name="companyname" type="text" class="form-control" id="floatingInput" placeholder="UserName" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
-                    <label for="floatingInput" style="opacity:0.5 ;left:1%;font-size: 30px;">Company Name</label>
+                  
                   </div>
 
                   <div class="form-floating mb-3" style="width: 617px; height: 71px; left: 451px; top: 120px; position: absolute; border-radius: 34px; ">
                     <input name="username" type="text" class="form-control" id="floatingInput" placeholder="UserName" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
-                    <label for="floatingInput" style="opacity:0.5 ;left:1%;font-size: 30px;">User Name</label>
+                    
                   </div>
 
                   <div class="form-floating mb-3" style="width: 617px; height: 71px; left: 451px; top: 240px; position: absolute; border-radius: 34px; ">
                     <input name="password" type="password" class="form-control" id="floatingInput" placeholder="UserName" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
-                    <label for="floatingInput" style="opacity:0.5 ;left:1%;font-size: 30px;">Password</label>
+                    
                   </div>
 
                   <div class="form-floating mb-3" style="width: 617px; height: 71px; left: 451px; top: 360px; position: absolute; border-radius: 34px; ">
                     <input name="industry" type="text" class="form-control" id="floatingInput" placeholder="UserName" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
-                    <label for="floatingInput" style="opacity:0.5 ;left:1%;font-size: 30px;">Industry</label>
+                    
                   </div>
 
                   <div class="form-floating mb-3" style="width: 617px; height: 71px; left: 451px; top: 480px; position: absolute; border-radius: 34px; ">
                     <input name="budget" type="text" class="form-control" id="floatingInput" placeholder="UserName" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
-                    <label for="floatingInput" style="opacity:0.5 ;left:1%;font-size: 30px;">Budget</label>
+                    
                   </div>
                 </div>
 
