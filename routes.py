@@ -183,7 +183,8 @@ def influencerprofileedit_post():
 @app.route('/companyhome')
 def companyhome():
     if 'user_id' in session:
-        return render_template('companyhome.html')
+        campaigns = Campaign.query.all()
+        return render_template('companyhome.html', campaigns=campaigns)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
@@ -208,8 +209,10 @@ def companyfind():
 @app.route('/companycampaigns')
 def companycampaigns():
     if 'user_id' in session:
-        campaigns = Campaign.query.all()
-        return render_template('companycampaigns.html', campaigns=campaigns)
+        company = Company.query.get(session['user_id'])
+        companyname = company.companyname
+        campaigns = Campaign.query.filter_by(companyname=companyname).all()
+        return render_template('companycampaigns.html', campaigns=campaigns,company=company)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
