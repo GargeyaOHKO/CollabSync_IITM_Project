@@ -110,7 +110,8 @@ def companyregister_post():
 @app.route('/influencerhome')
 def influencerhome():
     if 'user_id' in session:
-        return render_template('influencerhome.html')
+        campaign=Campaign.query.all()
+        return render_template('influencerhome.html',campaign=campaign)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))

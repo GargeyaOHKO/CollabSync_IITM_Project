@@ -8,12 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
     <style>
+      body{
+        background: url('/static/background.jpg') no-repeat center center fixed ;
+        background-size: cover;
+        background-color: #227bff;
+      }
     </style>
-  <body>
-    <div class="Wallpaper" style="width: 100%; height: 100%; left: 0px; top: 0px; position: absolute; justify-content: center; align-items: center; display: inline-flex ;z-index: -1;"> 
-      <img class="Options" style="width: 100%; height: 100%; position: relative" src="/static/background.jpg" />
-    </div>
-    
+  <body>  
 
       <nav class="navbar navbar-expand-lg bg-body-tertiary d-flex" style="z-index:1">
         <div class="container-fluid">
@@ -36,47 +37,44 @@
       </nav>
       {% include 'messages.html' with context%}
       <div class="AllCampaings" style="width: auto; height: auto; left: 60px; top: 150px; position: absolute; text-align: center; color: white; font-size: 60px; font-weight: 800; word-wrap: break-word; text-shadow: 2px 2px 4px #000000;">Your Campaigns</div>
-      <div class="AddNewCampaign" style="width: auto; height: 100px; left: 2050px; top: 130px; position: absolute">
-        <a class="btn btn-primary btn-lg" href="{{url_for('add_campaign')}}"  style="box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.5);width: 180px; height: 120px; position: center; background: #ffffff; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 1000; word-wrap: break-word">Add Campaign</a>
+      <div class="AddNewCampaign" href="{{url_for('add_campaign')}}" style="width: auto; height: 100px; left: 2050px; top: 130px; position: absolute">
+        <a class="btn btn-primary btn-lg" href="{{url_for('add_campaign')}}"  style="box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);width: 180px; height: 120px; position: center; background: #ffffff; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 1000; word-wrap: break-word">Add Campaign</a>
       </div>
       <div style="height: 150px;">
-
       </div>
-      
 
-        <table class="table table-bordered table-light mt-3">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Company</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Budget</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for campaign in campaigns %}
-                <tr>
-                    <td>{{ campaign.id }}</td>
-                    <td>{{ campaign.companyname }}</td>
-                    <td>{{ campaign.name }}</td>
-                    <td>{{ campaign.description }}</td>
-                    <td>{{ campaign.budget }}</td>
-                    <td>
-                      <a href="{{url_for('edit_campaign', id=campaign.id)}}" class="btn btn-primary">
-                          <i class="fas fa-edit    "></i>
-                          Edit
-                      </a>
-                      <a href="{{url_for('delete_campaign', id=campaign.id)}}" class="btn btn-danger">
-                          <i class="fas fa-trash    "></i>
-                          Delete
-                      </a>
-                  </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <div class="AllCampaings" style="width: auto; height: auto; left: 60px; top: 150px; position: absolute; text-align: left; color: white; font-size: 60px; font-weight: 800; word-wrap: break-word;">Your Campaigns
+        <div class="products">
+        {% for campaign in campaigns%}
+        <div class="Campaign" style="top:10px;width: 486px; height: 400px; position: relative;">
+          <div class="Rectangle10" style="box-shadow: 5px 8px 5px rgba(0, 0, 0, 0.5);width: 486px; height: 400px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px;text-shadow: 0px 0px 0px #00000000;"></div>
+          <div class="Amazon" style="width: 235px; height: 57px; left: 125px; top: 9px; position: absolute; text-align: center; color: black; font-size: 48px; font-weight: 800; word-wrap: break-word">{{campaign.companyname}}</div>
+          <div class="PromotionalVideoForBigBillionDays" style="width: 394px; height: 33px; left: 46px; top: 80px; position: absolute; text-align: center; color: black; font-size: 20px;  font-weight: 500; word-wrap: break-word">{{campaign.name}}</div>
+          <div class="Description" style="width: 389px; height: 119px; left: 51px; top: 115px; position: absolute; text-align: center; color: black; font-size: 20px;  font-weight: 300; word-wrap: break-word">{{campaign.description}}</div>
+          <div class="EditButton" style="width: 171px; height: 46px; left: 60px; top: 339px; position: absolute">
+            <a class="Edit" href="{{url_for('edit_campaign', id=campaign.id)}}" style="width: 171px; height: 55px; left: 0px; top: 0px; position: absolute; background: #000000; border-radius: 50px"></a>
+          <a class="Apply" href="{{url_for('edit_campaign', id=campaign.id)}}" style="width: 107px; height: 46px; left: 55px; top: 0px; position: absolute; color: white; font-size: 32px; font-weight: 500; word-wrap: break-word">Edit</a>
+          </div>
+          <div class="DeleteButton" style="width: 171px; height: 46px; left: 260px; top: 339px; position: absolute">
+            <a class="Rectangle11" href="{{url_for('delete_campaign', id=campaign.id)}}" style="width: 171px; height: 55px; left: 0px; top: 0px; position: absolute; background: #ff0808; border-radius: 50px"></a>
+            <a class="Budget" href="{{url_for('delete_campaign', id=campaign.id)}}" style="width: 103px; height: 28px; left: 34px; top: 0px; position: absolute; text-align: center; color: white; font-size: 32px; font-weight: 500; word-wrap: break-word;">Delete</a>
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+        </div>
+        {% block style %}
+        <style>
+            .products {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: left;
+            }
+            .Campaign{
+              margin: 15px;
+            }
+        </style>
+        {% endblock %}
       </div>
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
