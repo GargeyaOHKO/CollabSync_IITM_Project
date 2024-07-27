@@ -10,7 +10,98 @@ def index():
 
 @app.route('/adminlogin')
 def adminlogin():
+    ad=Admin.query.all()
+    if not ad:
+        password_hash=generate_password_hash('1234567')
+        new_user = Admin(username="Admin", passhash=password_hash)
+        db.session.add(new_user)
+        db.session.commit()
     return render_template('adminlogin.html')
+
+@app.route('/adminlogin' , methods=["POST"])
+def adminlogin_post():
+    username=request.form.get('username')
+    password=request.form.get('password')
+    if not username or not password:
+        flash("Please fill out all the fields")
+        return redirect(url_for('adminlogin'))
+    user1=Admin.query.filter_by(username=username).first()
+    if not user1:
+        flash('Username Does Not Exist')
+        return redirect(url_for('adminlogin'))
+    if user1:
+        if not check_password_hash(user1.passhash,password):
+            flash('Incorrect Password')
+            return redirect(url_for('adminlogin'))
+        else:
+            session['user_id']=user1.id
+            return redirect(url_for('adminhome'))
+        
+@app.route('/adminprofile')
+def adminprofile():
+    if 'user_id' in session:
+        return render_template('adminprofile.html')
+    else:
+        flash("Please Login First")
+        return redirect(url_for('adminlogin'))
+        
+@app.route('/adminhome')
+def adminhome():
+    if 'user_id' in session:
+        influ=Influencer.query.all()
+        return render_template('adminhome.html', influ=influ)
+    else:
+        flash("Please Enter Correct Details")
+        return redirect(url_for('adminlogin'))
+    
+@app.route('/admin/<int:id>/idelete')
+def idelete_admin(id):
+    if 'user_id' in session:
+        influencer=Influencer.query.get(id)
+        return render_template('admin/idelete.html',influencer=influencer)
+    else:
+        flash("Please Login To Continue")
+        return redirect(url_for('adminlogin'))
+
+@app.route('/admin/<int:id>/idelete',methods=['POST'])
+def idelete_admin_post(id):
+    influencer=Influencer.query.get(id)
+    if not influencer:
+        flash("Influencer Does Not Exist")
+        return redirect(url_for('adminhome'))
+    db.session.delete(influencer)
+    db.session.commit()
+    #flash('Campaign Edited Successfully')
+    return redirect(url_for('adminhome'))
+    
+@app.route('/admincampaigns')
+def admincampaigns():
+    if 'user_id' in session:
+        campaign=Campaign.query.all()
+        return render_template('admincampaigns.html',campaign=campaign)
+    else:
+        flash("Please Enter Correct Details")
+        return redirect(url_for('adminlogin'))
+    
+@app.route('/admin/<int:id>/cdelete')
+def cdelete_admin(id):
+    if 'user_id' in session:
+        campaign=Campaign.query.get(id)
+        return render_template('admin/cdelete.html',campaign=campaign)
+    else:
+        flash("Please Login To Continue")
+        return redirect(url_for('adminlogin'))
+
+@app.route('/admin/<int:id>/cdelete',methods=['POST'])
+def cdelete_admin_post(id):
+    campaign=Campaign.query.get(id)
+    if not campaign:
+        flash("Campaign Does Not Exist")
+        return redirect(url_for('admincampaigns'))
+    db.session.delete(campaign)
+    db.session.commit()
+    #flash('Campaign Edited Successfully')
+    return redirect(url_for('admincampaigns'))
 
 @app.route('/login')
 def login():
@@ -202,7 +293,13 @@ def companyprofile():
 @app.route('/companyfind')
 def companyfind():
     if 'user_id' in session:
-        return render_template('companyfind.html')
+        parameter=request.args.get('parameter')
+        query=request.args.get('query')
+        influ=Influencer.query.all()
+        if parameter=='name':
+            influ=Influencer.query.filter(Influencer.name.ilike(f'%(query)%')).all()
+        return render_template('companyfind.html',influ=influ, param=parameter, name=query)
+    
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))

@@ -36,18 +36,49 @@
         </div>
       </nav>
       {% include 'messages.html' with context%}
-      
-      <div class="FilterButton" style="width: 322px; height: 74px; left: 1900px; top: 167px; position: absolute">
-        <div class="Rectangle13" style="width: 322px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px"></div>
-        <div class="Filters" style="width: 177px; height: 43px; left: 66px; top: 8px; position: absolute; text-align: center; color: #B8B6B6; font-size: 36px; font-weight: 400; word-wrap: break-word">Filters</div>
+      <form action="" method="GET">
+      <div class="input-group" style="width: 322px; height: 74px; left: 1900px; top: 167px; position: absolute">
+        <select name="parameter" id="parameter" placeholder="Filter" class="Rectangle13" style="font-size:45px;width: 300px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 500; word-wrap: break-word">Filter
+          <option value="name" style="font-size:45px;width: 1278px; height: 74px; left: 30px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 300; word-wrap: break-word">Name</option>
+          <option value="category" style="font-size:45px;width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 300; word-wrap: break-word">Category</option>
+          <option value="platform" style="font-size:45px;width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 300; word-wrap: break-word">Platform</option>
+          <option value="followers" style="font-size:45px;width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 300; word-wrap: break-word">Followers</option>
         <img class="Filter" style="width: 49px; height: 55px; left: 24px; top: 9px; position: absolute" src="/static/filter.png" />
+      </select>
       </div>
       <div class="SearchBar" style="width: 1278px; height: 74px; left: 82px; top: 167px; position: absolute">
-        <div class="Rectangle12" style="width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px"></div>
-        <img class="Search" style="width: 54px; height: 74px; left: 23px; top: 0px; position: absolute" src="/static/search.png" />
-        <div class="Search" style="width: 177px; height: 43px; left: 92px; top: 8px; position: absolute; text-align: center; color: #B8B6B6; font-size: 36px; font-weight: 400; word-wrap: break-word">Search</div>
-      </div>
+        <input name="query" id="query" placeholder="Search" class="Rectangle12" style="font-size:45px;width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 500; word-wrap: break-word">
+        <button class="Search" style="width: 200px; height: 74px; left: 1300px; top: 0px; position: absolute; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 400; word-wrap: break-word ;" src="/static/search.png" >Search</button>
+        </div>
+      </form>
 
+      <div class="AllCampaings" style="width: auto; height: auto; left: 60px; top: 250px; position: absolute; text-align: left; color: white; font-size: 60px; font-weight: 800; word-wrap: break-word;">
+        <div class="products">
+        {% for infl in influ%}
+        {% if (param=='name' and name.lower() in infl.name.lower()) or param!='name' %}
+        <div class="Campaign" style="top:10px;width: 486px; height: 500px; position: relative;">
+          <div class="Rectangle10" style="box-shadow: 5px 8px 5px rgba(0, 0, 0, 0.5);width: 486px; height: 350px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px;text-shadow: 0px 0px 0px #000000;"></div>
+          <div class="Name" style="width: 500px; height: 57px; left: 0px; top: 9px; position: absolute; text-align: center; color: black; font-size: 48px; font-weight: 800; word-wrap: break-word">{{infl.name}}</div>
+          <div class="UserName" style="width: 394px; height: 33px; left: 46px; top: 80px; position: absolute; text-align: center; color: black; font-size: 40px;  font-weight: 300; word-wrap: break-word">Username: {{infl.username}}</div>
+          <div class="Category" style="width: 394px; height: 33px; left: 46px; top: 140px; position: absolute; text-align: center; color: black; font-size: 40px;  font-weight: 300; word-wrap: break-word">Category: {{infl.category}}</div>
+          <div class="Follwers" style="width: 394px; height: 33px; left: 46px; top: 200px; position: absolute; text-align: center; color: black; font-size: 40px;  font-weight: 300; word-wrap: break-word">Followers: {{infl.followers}}</div>
+          <div class="Platform" style="width: 389px; height: 119px; left: 51px; top: 255px; position: absolute; text-align: center; color: black; font-size: 40px;  font-weight: 300; word-wrap: break-word">Platform: {{infl.platform}}</div>  
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+        {% block style %}
+        <style>
+            .products {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: left;
+            }
+            .Campaign{
+              margin: 15px;
+            }
+        </style>
+        {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </div>

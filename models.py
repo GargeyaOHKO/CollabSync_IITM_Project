@@ -25,6 +25,7 @@ class Company(db.Model):
 class Admin(db.Model):
     __tablename__='admin'
     id=db.Column(db.Integer,primary_key=True)
+    username=db.Column(db.String(32),unique=False,nullable=False)
     passhash=db.Column(db.String(100),unique=False,nullable=False)
 
 class Campaign(db.Model):
