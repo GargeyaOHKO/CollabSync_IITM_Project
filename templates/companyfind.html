@@ -45,17 +45,18 @@
           <option value="followers" style="font-size:45px;width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 300; word-wrap: break-word">Followers</option>
         <img class="Filter" style="width: 49px; height: 55px; left: 24px; top: 9px; position: absolute" src="/static/filter.png" />
       </select>
-      </div>
-      <div class="SearchBar" style="width: 1278px; height: 74px; left: 82px; top: 167px; position: absolute">
+      
+      <div class="SearchBar" style="width: 1278px; height: 74px; left: -1800px; top: 0px; position: absolute">
         <input name="query" id="query" placeholder="Search" class="Rectangle12" style="font-size:45px;width: 1278px; height: 74px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 60px ;border-radius: 30px; --bs-btn-border-width:0; text-align: left; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 500; word-wrap: break-word">
         <button class="Search" style="width: 200px; height: 74px; left: 1300px; top: 0px; position: absolute; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 400; word-wrap: break-word ;" src="/static/search.png" >Search</button>
         </div>
+      </div>
       </form>
 
       <div class="AllCampaings" style="width: auto; height: auto; left: 60px; top: 250px; position: absolute; text-align: left; color: white; font-size: 60px; font-weight: 800; word-wrap: break-word;">
         <div class="products">
         {% for infl in influ%}
-        {% if (param=='name' and name.lower() in infl.name.lower()) or param!='name' %}
+        <!-- {% if (param=='name' and name.lower() in infl.name.lower()) or param!='name' %} -->
         <div class="Campaign" style="top:10px;width: 486px; height: 500px; position: relative;">
           <div class="Rectangle10" style="box-shadow: 5px 8px 5px rgba(0, 0, 0, 0.5);width: 486px; height: 350px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px;text-shadow: 0px 0px 0px #000000;"></div>
           <div class="Name" style="width: 500px; height: 57px; left: 0px; top: 9px; position: absolute; text-align: center; color: black; font-size: 48px; font-weight: 800; word-wrap: break-word">{{infl.name}}</div>
@@ -64,7 +65,7 @@
           <div class="Follwers" style="width: 394px; height: 33px; left: 46px; top: 200px; position: absolute; text-align: center; color: black; font-size: 40px;  font-weight: 300; word-wrap: break-word">Followers: {{infl.followers}}</div>
           <div class="Platform" style="width: 389px; height: 119px; left: 51px; top: 255px; position: absolute; text-align: center; color: black; font-size: 40px;  font-weight: 300; word-wrap: break-word">Platform: {{infl.platform}}</div>  
         </div>
-        {% endif %}
+        <!-- {% endif %} -->
         {% endfor %}
         </div>
         {% block style %}

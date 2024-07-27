@@ -219,7 +219,20 @@ def influencerprofile():
 @app.route('/influencerfind')
 def influencerfind():
     if 'user_id' in session:
-        return render_template('influencerfind.html')
+        parameter=request.args.get('parameter')
+        query=request.args.get('query')
+        campaign=Campaign.query.all()
+        if parameter=='name':
+            campaign=Campaign.query.filter(Campaign.name.ilike(f'%{query}%')).all()
+            return render_template('influencerfind.html',campaign=campaign)
+        elif parameter=='companyname':
+            campaign=Campaign.query.filter(Campaign.companyname.ilike(f'%{query}%')).all()
+            return render_template('influencerfind.html',campaign=campaign)
+        elif parameter=='budget':
+            campaign=Campaign.query.filter(Campaign.budget.ilike(f'%{query}%')).all()
+            return render_template('influencerfind.html',campaign=campaign)
+        campaign=Campaign.query.all()
+        return render_template('influencerfind.html',campaign=campaign)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
@@ -297,9 +310,19 @@ def companyfind():
         query=request.args.get('query')
         influ=Influencer.query.all()
         if parameter=='name':
-            influ=Influencer.query.filter(Influencer.name.ilike(f'%(query)%')).all()
-        return render_template('companyfind.html',influ=influ, param=parameter, name=query)
-    
+            influ=Influencer.query.filter(Influencer.name.ilike(f'%{query}%')).all()
+            return render_template('companyfind.html',influ=influ)
+        elif parameter=='category':
+            influ=Influencer.query.filter(Influencer.category.ilike(f'%{query}%')).all()
+            return render_template('companyfind.html',influ=influ)
+        elif parameter=='platform':
+            influ=Influencer.query.filter(Influencer.platform.ilike(f'%{query}%')).all()
+            return render_template('companyfind.html',influ=influ)
+        elif parameter=='followers':
+            influ=Influencer.query.filter(Influencer.followers.ilike(f'%{query}%')).all()
+            return render_template('companyfind.html',influ=influ)
+        influ=Influencer.query.all()
+        return render_template('companyfind.html',influ=influ)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
