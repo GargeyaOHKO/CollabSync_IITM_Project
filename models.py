@@ -16,7 +16,7 @@ class Influencer(db.Model):
 class Company(db.Model):
     __tablename__='company'
     id=db.Column(db.Integer,primary_key=True)
-    companyname=db.Column(db.String(32),unique=False,nullable=False)
+    companyname=db.Column(db.String(32),unique=True,nullable=False)
     username=db.Column(db.String(32),unique=True,nullable=False)
     passhash=db.Column(db.String(100),unique=False,nullable=False)
     industry=db.Column(db.String(32),unique=False,nullable=False)
@@ -48,10 +48,20 @@ class Ad(db.Model):
     payamt=db.Column(db.String(100),unique=False,nullable=False)
     status=db.Column(db.String(32),unique=False,nullable=False)
 
-class Role(db.Model):
-    __tablename__='role'
-    role=db.Column(db.Integer,primary_key=True)
-    user_id=db.Column(db.Integer,db.ForeignKey('influencer.id'),nullable=False)
+class Requests(db.Model):
+    __tablename__='requests'
+    id=db.Column(db.Integer,primary_key=True)
+    influencer_id=db.Column(db.Integer,unique=False,nullable=False)
+    campaign_id=db.Column(db.Integer,unique=False,nullable=False)
+    campaignname=db.Column(db.String(32),unique=False,nullable=False)
+    campaigndescription=db.Column(db.String(100),unique=False,nullable=False)
+    campaignbudget=db.Column(db.String(32),unique=False,nullable=False)
+    companyname=db.Column(db.String(32),unique=False,nullable=False)
+    influencername=db.Column(db.String(32),unique=False,nullable=False)
+    influencercategory=db.Column(db.String(32),unique=False,nullable=False)
+    influencerplatform=db.Column(db.String(32),unique=False,nullable=False)
+    influencerfollowers=db.Column(db.String(32),unique=False,nullable=False)
+    
 
 with app.app_context():
     db.create_all()

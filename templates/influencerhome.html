@@ -43,10 +43,12 @@
         <div class="Amazon" style="width: 235px; height: 57px; left: 125px; top: 9px; position: absolute; text-align: center; color: black; font-size: 48px; font-weight: 800; word-wrap: break-word">{{campaign.companyname}}</div>
         <div class="PromotionalVideoForBigBillionDays" style="width: 394px; height: 33px; left: 46px; top: 80px; position: absolute; text-align: center; color: black; font-size: 20px;  font-weight: 500; word-wrap: break-word">{{campaign.name}}</div>
         <div class="Description" style="width: 389px; height: 119px; left: 51px; top: 115px; position: absolute; text-align: center; color: black; font-size: 20px;  font-weight: 300; word-wrap: break-word">{{campaign.description}}</div>
+        <form action="{{url_for('campaignrequestsapply', campaign_id=campaign.id)}}" method="POST" class="form">
         <div class="ApplyButton" style="width: 171px; height: 46px; left: 269px; top: 339px; position: absolute">
           <a class="Rectangle11" href="#" style="width: 171px; height: 55px; left: 0px; top: 0px; position: absolute; background: #00c22a; border-radius: 50px"></a>
-          <a class="Apply" href="#" style="width: 107px; height: 46px; left: 34px; top: 0px; position: absolute; color: white; font-size: 32px; font-weight: 900; word-wrap: break-word">Apply</a>
+          <input type="submit" value="Apply" class="Apply" href="#" style="width: 107px; height: 46px; left: 34px; top: 0px; position: absolute; color: white; font-size: 32px; font-weight: 900; word-wrap: break-word;background-color:#00000000;border:none">
         </div>
+        </form>
         <div class="Pay" style="width: 171px; height: 46px; left: 59px; top: 339px; position: absolute">
           <div class="Rectangle11" style="width: 171px; height: 55px; left: 0px; top: 0px; position: absolute; background: #030303; border-radius: 50px"></div>
           <div class="Budget" style="width: 103px; height: 28px; left: 34px; top: 7px; position: absolute; text-align: center; color: white; font-size: 25px; font-weight: 900; word-wrap: break-word">Rs.{{campaign.budget}}</div>

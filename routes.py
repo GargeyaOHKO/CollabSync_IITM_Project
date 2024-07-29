@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash,session
-from models import db,Influencer,Company,Admin,Campaign,Ad
+from models import Requests, db,Influencer,Company,Admin,Campaign,Ad
 from app import app 
 from werkzeug.security import generate_password_hash,check_password_hash
 
@@ -283,6 +283,47 @@ def influencerprofileedit_post():
     
 
 #company
+@app.route('/campaignrequests')
+def campaignrequests():
+    if 'user_id' in session:
+        company_id = Company.query.get(session['user_id'])
+        companyname = company_id.companyname
+        request = Requests.query.filter_by(companyname=companyname).all()
+        return render_template('campaignrequests.html',company_id=company_id,request=request)
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
+
+@app.route('/campaignrequestsapply/<int:campaign_id>', methods=['POST'])
+def campaignrequestsapply(campaign_id):
+    campaign = Campaign.query.get(campaign_id)
+    if not campaign:
+        flash('Campaign does not exist')
+        return redirect(url_for('influencerhome'))
+    influencer_id = session['user_id']
+    influencer = Influencer.query.get(influencer_id)
+    # Check if the influencer has already applied
+    existing_application = Requests.query.filter_by(influencer_id=influencer_id, campaign_id=campaign_id).first()
+    if existing_application:
+        flash("You have already applied for this campaign")
+        return redirect(url_for('influencerhome'))
+    apply = Requests(
+        influencer_id=influencer_id, 
+        campaign_id=campaign_id,
+        companyname=campaign.companyname,
+        campaigndescription=campaign.description,
+        campaignbudget=campaign.budget,
+        campaignname=campaign.name,
+        influencername=influencer.name,
+        influencercategory=influencer.category,
+        influencerplatform=influencer.platform,
+        influencerfollowers=influencer.followers
+    )
+    db.session.add(apply)
+    db.session.commit()
+    flash("Applied Successfully")
+    return redirect(url_for('influencerhome'))
 
 
 @app.route('/companyhome')
