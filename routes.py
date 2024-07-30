@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash,session
-from models import Requests, db,Influencer,Company,Admin,Campaign,Ad
+from models import Completedcampaign, Requests, db,Influencer,Company,Admin,Campaign,Ad,Ongoingcampaign
 from app import app 
 from werkzeug.security import generate_password_hash,check_password_hash
 
@@ -71,7 +71,7 @@ def idelete_admin_post(id):
         return redirect(url_for('adminhome'))
     db.session.delete(influencer)
     db.session.commit()
-    #flash('Campaign Edited Successfully')
+    flash('Campaign Edited Successfully')
     return redirect(url_for('adminhome'))
     
 @app.route('/admincampaigns')
@@ -100,7 +100,7 @@ def cdelete_admin_post(id):
         return redirect(url_for('admincampaigns'))
     db.session.delete(campaign)
     db.session.commit()
-    #flash('Campaign Edited Successfully')
+    flash('Campaign Edited Successfully')
     return redirect(url_for('admincampaigns'))
 
 @app.route('/login')
@@ -201,11 +201,15 @@ def companyregister_post():
 @app.route('/influencerhome')
 def influencerhome():
     if 'user_id' in session:
-        campaign=Campaign.query.all()
-        return render_template('influencerhome.html',campaign=campaign)
+        influencer_id = session['user_id']
+        applied_campaign_ids = [request.campaign_id for request in Requests.query.filter_by(influencer_id=influencer_id).all()]
+        campaign = Campaign.query.filter(~Campaign.id.in_(applied_campaign_ids)).all()
+        return render_template('influencerhome.html', campaign=campaign)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
+    
+
     
 @app.route('/influencerprofile')
 def influencerprofile():
@@ -240,11 +244,57 @@ def influencerfind():
 @app.route('/influencercampaigns')
 def influencercampaigns():
     if 'user_id' in session:
-        return render_template('influencercampaigns.html')
+        user=Influencer.query.get(session['user_id'])
+        influencer_id = user.id
+        request=Ongoingcampaign.query.filter_by(influencer_id=influencer_id).all()
+        return render_template('influencercampaigns.html',request=request)
     else:
         flash('Please login to continue')
         return redirect(url_for('login'))
     
+
+@app.route('/campaign_complete/<int:request_id>', methods=['POST'])
+def campaign_complete(request_id):
+    campaign = Ongoingcampaign.query.get(request_id)
+    if not campaign:
+        flash('Campaign does not exist')
+        return redirect(url_for('influencerhome'))
+    influencer_id = session['user_id']
+    influencer = Influencer.query.get(influencer_id)
+    done = Completedcampaign(
+        influencer_id=campaign.influencer_id, 
+        campaign_id=campaign.campaign_id,
+        company_id=campaign.company_id,
+        companyname=campaign.companyname,
+        request_id=campaign.request_id,
+        campaigndescription=campaign.campaigndescription,
+        campaignbudget=campaign.campaignbudget,
+        campaignname=campaign.campaignname,
+        influencername=campaign.influencername,
+        influencerusername=campaign.influencerusername,
+        influencercategory=campaign.influencercategory,
+        influencerplatform=campaign.influencerplatform,
+        influencerfollowers=campaign.influencerfollowers
+    )
+    db.session.add(done)
+    db.session.commit()
+    flash("Campaign Completed")
+    request = Ongoingcampaign.query.get(request_id)
+    db.session.delete(request)
+    db.session.commit()
+    return redirect(url_for('influencerhome'))
+    
+@app.route('/influencercompletedcampaigns')
+def influencercompletedcampaigns():
+    if 'user_id' in session:
+        user=Influencer.query.get(session['user_id'])
+        influencer_id = user.id
+        request=Completedcampaign.query.filter_by(influencer_id=influencer_id).all()
+        return render_template('influencercompletedcampaigns.html',request=request)
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+
 @app.route('/influencerprofileedit')
 def influencerprofileedit():
     if 'user_id' in session:
@@ -283,6 +333,29 @@ def influencerprofileedit_post():
     
 
 #company
+@app.route('/companycompletedcampaigns')
+def companycompletedcampaigns():
+    if 'user_id' in session:
+        company = Company.query.get(session['user_id'])
+        company_id = company.id
+        request = Completedcampaign.query.filter_by(company_id=company_id).all()
+        return render_template('companycompletedcampaigns.html',request=request)
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+
+
+@app.route('/companyongoingcampaigns')
+def companyongoingcampaigns():
+    if 'user_id' in session:
+        company = Company.query.get(session['user_id'])
+        companyname = company.companyname
+        request = Ongoingcampaign.query.filter_by(companyname=companyname).all()
+        return render_template('companyongoingcampaigns.html',request=request)
+    else:
+        flash('Please login to continue')
+        return redirect(url_for('login'))
+    
 @app.route('/campaignrequests')
 def campaignrequests():
     if 'user_id' in session:
@@ -316,6 +389,7 @@ def campaignrequestsapply(campaign_id):
         campaignbudget=campaign.budget,
         campaignname=campaign.name,
         influencername=influencer.name,
+        influencerusername=influencer.username,
         influencercategory=influencer.category,
         influencerplatform=influencer.platform,
         influencerfollowers=influencer.followers
@@ -324,6 +398,51 @@ def campaignrequestsapply(campaign_id):
     db.session.commit()
     flash("Applied Successfully")
     return redirect(url_for('influencerhome'))
+
+#Accept/Reject
+
+@app.route('/campaignrequests_accept/<int:request_id>', methods=['POST'])
+def campaignrequests_accept(request_id):
+    request = Requests.query.get(request_id)
+    if not request:
+        flash('Request does not exist')
+        return redirect(url_for('campaignrequests'))
+    company=Company.query.get(session['user_id'])
+    
+    apply = Ongoingcampaign(
+        influencer_id=request.influencer_id, 
+        campaign_id=request.campaign_id,
+        company_id=company.id,
+        request_id=request.id,
+        companyname=request.companyname,
+        campaigndescription=request.campaigndescription,
+        campaignbudget=request.campaignbudget,
+        campaignname=request.campaignname,
+        influencername=request.influencername,
+        influencerusername=request.influencerusername,
+        influencercategory=request.influencercategory,
+        influencerplatform=request.influencerplatform,
+        influencerfollowers=request.influencerfollowers
+    )
+    db.session.add(apply)
+    db.session.commit()
+    request = Requests.query.get(request_id)
+    db.session.delete(request)
+    db.session.commit()
+    flash("Accepted Request Successfully")
+    return redirect(url_for('campaignrequests'))
+
+
+@app.route('/campaignrequests_reject/<int:request_id>', methods=['POST'])
+def campaignrequests_reject(request_id):
+    request = Requests.query.get(request_id)
+    if not request:
+        flash('Request does not exist')
+        return redirect(url_for('campaignrequests'))
+    db.session.delete(request)
+    db.session.commit()
+    flash('Request Rejected Successfully')
+    return redirect(url_for('campaignrequests'))
 
 
 @app.route('/companyhome')
@@ -437,7 +556,7 @@ def add_campaign_post():
     campaign=Campaign(companyname=companyname,name=name,description=description,budget=budget,visibility=True)
     db.session.add(campaign)
     db.session.commit()
-    #flash('Campaign Added Successfully')
+    flash('Campaign Added Successfully')
     return redirect(url_for('companycampaigns'))
     
 @app.route('/campaign/<int:id>/edit')
@@ -465,7 +584,7 @@ def edit_campaign_post(id):
     campaign.description=description
     campaign.budget=budget
     db.session.commit()
-    #flash('Campaign Edited Successfully')
+    flash('Campaign Edited Successfully')
     return redirect(url_for('companycampaigns'))    
 
 @app.route('/campaign/<int:id>/delete')
@@ -485,5 +604,5 @@ def delete_campaign_post(id):
         return redirect(url_for('companycampaigns'))
     db.session.delete(campaign)
     db.session.commit()
-    #flash('Campaign Edited Successfully')
+    flash('Campaign Deleted Successfully')
     return redirect(url_for('companycampaigns'))

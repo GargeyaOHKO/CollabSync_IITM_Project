@@ -57,11 +57,46 @@ class Requests(db.Model):
     campaigndescription=db.Column(db.String(100),unique=False,nullable=False)
     campaignbudget=db.Column(db.String(32),unique=False,nullable=False)
     companyname=db.Column(db.String(32),unique=False,nullable=False)
+    influencerusername=db.Column(db.String(32),unique=False,nullable=False)
     influencername=db.Column(db.String(32),unique=False,nullable=False)
     influencercategory=db.Column(db.String(32),unique=False,nullable=False)
     influencerplatform=db.Column(db.String(32),unique=False,nullable=False)
     influencerfollowers=db.Column(db.String(32),unique=False,nullable=False)
-    
+
+class Ongoingcampaign(db.Model):
+    __tablename__='ongoingcampaign'
+    id=db.Column(db.Integer,primary_key=True)
+    influencer_id=db.Column(db.Integer,unique=False,nullable=False)
+    campaign_id=db.Column(db.Integer,unique=False,nullable=False)
+    company_id=db.Column(db.Integer,unique=False,nullable=False)
+    request_id=db.Column(db.Integer,unique=False,nullable=False)
+    campaignname=db.Column(db.String(32),unique=False,nullable=False)
+    campaigndescription=db.Column(db.String(100),unique=False,nullable=False)
+    campaignbudget=db.Column(db.String(32),unique=False,nullable=False)
+    companyname=db.Column(db.String(32),unique=False,nullable=False)
+    influencerusername=db.Column(db.String(32),unique=False,nullable=False)
+    influencername=db.Column(db.String(32),unique=False,nullable=False)
+    influencercategory=db.Column(db.String(32),unique=False,nullable=False)
+    influencerplatform=db.Column(db.String(32),unique=False,nullable=False)
+    influencerfollowers=db.Column(db.String(32),unique=False,nullable=False)
+
+class Completedcampaign(db.Model):
+    __tablename__='completedcampaign'
+    id=db.Column(db.Integer,primary_key=True)
+    influencer_id=db.Column(db.Integer,unique=False,nullable=False)
+    campaign_id=db.Column(db.Integer,unique=False,nullable=False)
+    company_id=db.Column(db.Integer,unique=False,nullable=False)
+    request_id=db.Column(db.Integer,unique=False,nullable=False)
+    campaignname=db.Column(db.String(32),unique=False,nullable=False)
+    campaigndescription=db.Column(db.String(100),unique=False,nullable=False)
+    campaignbudget=db.Column(db.String(32),unique=False,nullable=False)
+    companyname=db.Column(db.String(32),unique=False,nullable=False)
+    influencerusername=db.Column(db.String(32),unique=False,nullable=False)
+    influencername=db.Column(db.String(32),unique=False,nullable=False)
+    influencercategory=db.Column(db.String(32),unique=False,nullable=False)
+    influencerplatform=db.Column(db.String(32),unique=False,nullable=False)
+    influencerfollowers=db.Column(db.String(32),unique=False,nullable=False)
+
 
 with app.app_context():
     db.create_all()

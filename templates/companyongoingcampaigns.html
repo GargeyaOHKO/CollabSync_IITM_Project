@@ -37,36 +37,23 @@
       </nav>
       {% include 'messages.html' with context%}
       
-      <div class="AllCampaings" style="width: auto; height: auto; left: 60px; top: 150px; position: absolute; text-align: left; color: white; font-size: 60px; font-weight: 800; word-wrap: break-word; text-shadow: 4px 4px 4px #000000;">All Requests
+      <div class="AllCampaings" style=" text-shadow: 2px 2px 4px #000000; width: auto; height: auto; left: 60px; top: 150px; position: absolute; text-align: left; color: white; font-size: 60px; font-weight: 800; word-wrap: break-word;">Ongoing Campaigns
         <div class="products">
         {% for request in request%}
         <div class="Campaing4" style="width: 1600px; height: 309px; position: relative">
             <div class="Rectangle10" style="width: 1600px; height: 280px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; text-shadow: 0px 0px 0px #000000;"></div>
             <div class="Title" style="width: auto; height: 33px; left: 41px; top: 20px; position: absolute; text-align: center; color: black; font-size: 35px;  font-weight: 700; word-wrap: break-word; text-shadow: 0px 0px 0px #000000;">{{request.campaignname}}</div>
-            <div class="Description" style="width: 385px; height: 119px; left: 34px; top: 70px; position: absolute; text-align: center; color: black; font-size: 20px; font-weight: 300; word-wrap: break-word ; text-shadow: 0px 0px 0px #000000;">{{request.campaigndescription}}</div>
-            <div class="Pay" style="width: auto; height: 46px; left: 111px; top: 200px; position: absolute ; text-shadow: 0px 0px 0px #000000;">
+            <div class="Description" style="width: 385px; height: 119px; left: 34px; top: 70px; position: absolute; text-align: center; color: black; font-size: 20px; font-weight: 300; word-wrap: break-word; text-shadow: 0px 0px 0px #000000;">{{request.campaigndescription}}</div>
+            <div class="Pay" style="width: auto; height: 46px; left: 111px; top: 200px; position: absolute; text-shadow: 0px 0px 0px #000000;">
               <div class="Rectangle11" style="width: 226.17px; height: 46px; left: 0px; top: 0px; position: absolute; background: #030303; border-radius: 50px"></div>
               <div class="KInr" style="width: 136.23px; height: 28px; left: 44.97px; top: 7px; position: absolute; text-align: center; color: white; font-size: 25px;  font-weight: 900; word-wrap: break-word">{{request.campaignbudget}}INR</div>
             </div>
 
-            <div class="Title" style="width: auto; height: 33px; left: 600px; top: 20px; position: absolute; text-align: center; color: black; font-size: 35px;  font-weight: 700; word-wrap: break-word ; text-shadow: 0px 0px 0px #000000;">Name: {{request.influencername}}</div>
-            <div class="Description" style="width: auto; height: 119px; left: 600px; top: 70px; position: absolute; text-align: center; color: black; font-size: 30px; font-weight: 300; word-wrap: break-word ; text-shadow: 0px 0px 0px #000000;">Category: {{request.influencercategory}}</div>
+            <div class="Title" style="width: auto; height: 33px; left: 600px; top: 20px; position: absolute; text-align: center; color: black; font-size: 35px;  font-weight: 700; word-wrap: break-word; text-shadow: 0px 0px 0px #000000;">Name: {{request.influencername}}</div>
+            <div class="Description" style="width: auto; height: 119px; left: 600px; top: 70px; position: absolute; text-align: center; color: black; font-size: 30px; font-weight: 300; word-wrap: break-word; text-shadow: 0px 0px 0px #000000;">Category: {{request.influencercategory}}</div>
             <div class="Description" style="width: auto; height: 119px; left: 600px; top: 120px; position: absolute; text-align: center; color: black; font-size: 30px; font-weight: 300; word-wrap: break-word; text-shadow: 0px 0px 0px #000000;">Followers: {{request.influencerfollowers}}</div>
             <div class="Description" style="width: auto; height: 119px; left: 600px; top: 170px; position: absolute; text-align: center; color: black; font-size: 30px; font-weight: 300; word-wrap: break-word; text-shadow: 0px 0px 0px #000000;">Platform: {{request.influencerplatform}}</div>
             
-            <form action="{{url_for('campaignrequests_accept', request_id=request.id)}}" method="POST" class="form">
-                <div class="ApplyButton" style="width: 171px; height: 46px; left: 1100px; top: 100px; position: absolute">
-                  <a class="Rectangle11" href="#" style="width: 200px; height: 60px; left: 0px; top: 0px; position: absolute; background: #00c22a; border-radius: 50px"></a>
-                  <input type="submit" value="Accept" class="Apply" href="#" style="width: 200px; height: 46px; left: 0px; top: 0px; position: absolute; color: white; font-size: 32px; font-weight: 900; word-wrap: break-word;background-color:#00000000;border:none">
-                </div>
-            </form>
-
-            <form action="{{url_for('campaignrequests_reject', request_id=request.id)}}" method="POST" class="form">
-                <div class="ApplyButton" style="width: 171px; height: 46px; left: 1340px; top: 100px; position: absolute">
-                    <a class="Rectangle11" href="#" style="width: 200px; height: 60px; left: 0px; top: 0px; position: absolute; background: #ff1100; border-radius: 50px"></a>
-                    <input type="submit" value="Reject" class="Reject" href="#" style="width: 200px; height: 46px; left: 0px; top: 0px; position: absolute; color: white; font-size: 32px; font-weight: 900; word-wrap: break-word;background-color:#00000000;border:none">
-                  </div>
-            </form>
         </div>
         {% endfor %}
         </div>

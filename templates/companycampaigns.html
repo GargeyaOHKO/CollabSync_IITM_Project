@@ -44,6 +44,15 @@
       <div class="CampaignRequests" href="{{url_for('campaignrequests')}}" style="width: auto; height: 100px; left: 1830px; top: 130px; position: absolute">
         <a class="btn btn-primary btn-lg" href="{{url_for('campaignrequests')}}" style="box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);width: 180px; height: 120px; position: center; background: #ffffff; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 1000; word-wrap: break-word">Campaign Requests</a>
       </div>
+
+      <div class="OngoingCampaign" href="{{url_for('companyongoingcampaigns')}}" style="width: auto; height: 100px; left: 1600px; top: 130px; position: absolute">
+        <a class="btn btn-primary btn-lg" href="{{url_for('companyongoingcampaigns')}}" style="box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);width: 195px; height: 120px; position: center; background: #ffffff; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 1000; word-wrap: break-word">Ongoing Campaigns</a>
+      </div>
+
+      <div class="CompletedCampaign" href="{{url_for('companycompletedcampaigns')}}" style="width: auto; height: 100px; left: 1370px; top: 130px; position: absolute">
+        <a class="btn btn-primary btn-lg" href="{{url_for('companycompletedcampaigns')}}" style="box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);width: 195px; height: 120px; position: center; background: #ffffff; border-radius: 30px; --bs-btn-border-width:0; text-align: center; color: rgb(0, 0, 0); font-size: 30px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 1000; word-wrap: break-word">Completed Campaigns</a>
+      </div>
+
       <div style="height: 150px;"></div>
       </div>
 
@@ -52,7 +61,7 @@
         {% for campaign in campaigns%}
         <div class="Campaign" style="top:10px;width: 486px; height: 400px; position: relative;">
           <div class="Rectangle10" style="box-shadow: 5px 8px 5px rgba(0, 0, 0, 0.5);width: 486px; height: 400px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px;text-shadow: 0px 0px 0px #00000000;"></div>
-          <div class="Amazon" style="width: 235px; height: 57px; left: 125px; top: 9px; position: absolute; text-align: center; color: black; font-size: 48px; font-weight: 800; word-wrap: break-word">{{campaign.companyname}}</div>
+          <div class="Amazon" style="width: 350px; height: 57px; left: 70px; top: 9px; position: absolute; text-align: center; color: black; font-size: 48px; font-weight: 800; word-wrap: break-word">{{campaign.companyname}}</div>
           <div class="PromotionalVideoForBigBillionDays" style="width: 394px; height: 33px; left: 46px; top: 80px; position: absolute; text-align: center; color: black; font-size: 20px;  font-weight: 500; word-wrap: break-word">{{campaign.name}}</div>
           <div class="Description" style="width: 389px; height: 119px; left: 51px; top: 115px; position: absolute; text-align: center; color: black; font-size: 20px;  font-weight: 300; word-wrap: break-word">{{campaign.description}}</div>
           <div class="EditButton" style="width: 171px; height: 46px; left: 60px; top: 339px; position: absolute">
