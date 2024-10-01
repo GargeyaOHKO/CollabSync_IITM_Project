@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CollabSync</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <style>
+    body{
+      background: url('/static/background.jpg') no-repeat center center fixed ;
+      background-size: cover;
+      background-color: #227bff;
+    }
+    </style>
+  <body>
+    {% include 'messages.html' with context%}
+    
+    <div>
+        <div class="Rectangle2" style="width: 100%; height: 100%; left: 0px; top: 0px; position: absolute; background: rgb(255, 255, 255)"></div> 
+          <div class="Wallpaper" style="width: 100%; height: 100%; left: 0px; top: 0px; position: absolute; justify-content: center; align-items: center; display: inline-flex"> 
+            <img class="Options" style="width: 100%; height: 100%; position: relative" src="/static/background.png" />
+        </div>
+        <form actions="" class="form" method="post" >
+          <div class="LoginButton" style="width: 562.97px; height: 130px; left: 679px; top: 750px; position: absolute">
+            <input type="submit" value="Login" class="btn btn-primary btn-lg" style="width: 562.97px; height: 130px; left: 0px; top: 0px; position: absolute; background: #000000; border-radius: 76px;--bs-btn-border-width:0; text-align:center;color: rgb(255, 255, 255); font-size: 64px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 700; word-wrap: break-word">
+          </div>
+
+          <div class="Password" style="width: 1263px; left: 316px; top: 550px; position: absolute">
+            <div class="Password" style="width: 397px; height: 103px; left: 0px; top: 0px; position: absolute; text-align: center; color: white; font-size: 80px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 400; word-wrap: break-word">Password</div>
+            <div class="form-floating mb-3" style="width: 745px; height: 100px; left: 518px; top: 9px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
+              <input name='password' type="password" class="form-control" id="floatingInput" placeholder="Password" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute;background-color:rgba(0, 0, 0, 0); background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
+            </div> 
+          </div>
+      
+          <div class="Name" style="width: 1375px; left: 204px; top: 400px; position: absolute">
+            <div class="UserName" style="width: 800px; height: 103px; left: -120px; top: 0px; position: absolute; text-align: center; color: white; font-size: 80px; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: 400; word-wrap: break-word">Admin Username</div>  
+            <div class="form-floating mb-3" style="width: 745px; height: 100px; left: 628px; top: 9px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
+              <input name='username' type="username" class="form-control" id="floatingInput" placeholder="UserName" style="font-size:45px ;width: 745px; height: 100px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 34px">
+            </div>
+          </div>
+      </form>
+        <div class="AdminAuthentication" style="left: 600px; top: 89px; position: absolute; color: white; font-size: 96px; font-weight: 500; word-wrap: break-word">Admin</div>
+        <div class="AdminAuthentication" style="left: 800px; top: 200px; position: absolute; color: white; font-size: 96px; font-weight: 500; word-wrap: break-word">Authentication</div>
+        <a class="icon-link icon-link-hover" href="{{url_for('index')}}" style="width: 173px; height: 100px; left: 61px; top: 142px; position: absolute; text-align: center; color: rgb(255, 255, 255); font-size: 64px; font-weight: 400; word-wrap: break-word">
+          <img class="Options" style="width: 100%; height: 100%; position: relative" src="/static/BackButton.png" />
+          <svg class="bi" aria-hidden="true" width: 1263px; left: 316px; top: 557px; position: absolute><use xlink:href="#arrow-right"></use></svg>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </div>
+  </body>
+</html>
