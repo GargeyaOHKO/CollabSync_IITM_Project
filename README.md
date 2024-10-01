@@ -1,5 +1,3 @@
-Here's a detailed README for your **Influencer Engagement and Sponsorship Coordination Platform** project:
-
 ---
 
 # **Influencer Engagement and Sponsorship Coordination Platform**
