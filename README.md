@@ -136,5 +136,3 @@ Contributions are welcome! Please follow these steps:
 If you have any questions or issues, feel free to reach out at [parabgargeya@gmail.com].
 
 ---
-
-This README provides an overview of the project, setup instructions, and usage guidelines. Let me know if you need to modify or add more details!
